@@ -1,5 +1,5 @@
 {
-  "name": "SewMaster - Sistema de Gestão de Costura",
+  "name": "Controle de Produção",
   "description": "Uma plataforma completa para gestão de produção, vendas e análise financeira para ateliês de costura, com insights inteligentes via Gemini API.",
   "requestFramePermissions": []
 }

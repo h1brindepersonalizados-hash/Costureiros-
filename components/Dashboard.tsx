@@ -142,9 +142,9 @@ const Dashboard: React.FC<DashboardProps> = ({ summary, production, onPrintSeams
                     <td className="px-6 py-4 text-right">
                       <button 
                         onClick={() => onPrintSeamstress(s.displayName)}
-                        className="bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all"
+                        className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100 flex items-center gap-2 ml-auto"
                       >
-                        PDF
+                        📄 Exportar PDF
                       </button>
                     </td>
                   </tr>

@@ -114,7 +114,7 @@ const ProductionTable: React.FC<ProductionTableProps> = ({
         <div className="flex justify-between items-end border-b-4 border-black pb-4 mb-8">
           <div>
             <h1 className="text-4xl font-black uppercase tracking-tighter">Relatório de Pagamento</h1>
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">SewMaster - Gestão Profissional</p>
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">Controle de Produção - Gestão Profissional</p>
           </div>
           <div className="text-right">
              <p className="text-[10px] font-bold uppercase opacity-60">Valor Total a Pagar:</p>
@@ -338,7 +338,7 @@ const ProductionTable: React.FC<ProductionTableProps> = ({
            <div className="text-center">
               <div className="border-t-2 border-black pt-4">
                  <p className="font-black uppercase text-xs">Assinatura do Responsável</p>
-                 <p className="text-[10px] text-slate-500 mt-1 uppercase">SewMaster Management</p>
+                 <p className="text-[10px] text-slate-500 mt-1 uppercase">Controle de Produção</p>
               </div>
            </div>
            <div className="text-center">

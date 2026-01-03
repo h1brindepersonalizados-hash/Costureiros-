@@ -23,7 +23,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab }) => {
           <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white text-xl shadow-lg shadow-indigo-100">
             🧵
           </div>
-          <span className="font-serif font-bold text-2xl text-slate-800 tracking-tighter">SewMaster</span>
+          <span className="font-serif font-bold text-xl text-slate-800 tracking-tighter leading-tight">Controle de Produção</span>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -44,7 +44,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab }) => {
         </div>
         
         <div className="mt-auto p-4 bg-slate-50 rounded-2xl border border-slate-100">
-          <p className="text-[10px] text-slate-400 text-center font-bold uppercase tracking-widest">Gestão de Ateliê v1.2</p>
+          <p className="text-[10px] text-slate-400 text-center font-bold uppercase tracking-widest">Gestão de Ateliê v1.3</p>
         </div>
       </nav>
 

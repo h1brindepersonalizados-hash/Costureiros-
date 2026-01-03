@@ -1,7 +1,7 @@
 
 {
-  "name": "SewMaster Gestão de Costura",
-  "short_name": "SewMaster",
+  "name": "Controle de Produção",
+  "short_name": "Produção",
   "description": "Gestão de produção e pagamentos para ateliês.",
   "start_url": ".",
   "display": "standalone",

@@ -10,22 +10,31 @@ import Catalog from './components/Catalog';
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<AppTab>('dashboard');
   
-  // Inicializa o estado buscando do LocalStorage ou usando valores padrão
+  // Inicializa o catálogo com tratamento de erro
   const [catalog, setCatalog] = useState<ProductCatalog[]>(() => {
-    const saved = localStorage.getItem('sewmaster_catalog');
-    return saved ? JSON.parse(saved) : [
-      { id: 'c1', name: 'Mochila', productionPrice: 3.00 },
-      { id: 'c2', name: 'Mini Mala', productionPrice: 3.50 },
-      { id: 'c3', name: 'Estojo', productionPrice: 1.50 },
-    ];
+    try {
+      const saved = localStorage.getItem('sewmaster_catalog');
+      return saved ? JSON.parse(saved) : [
+        { id: 'c1', name: 'Mochila', productionPrice: 3.00 },
+        { id: 'c2', name: 'Mini Mala', productionPrice: 3.50 },
+        { id: 'c3', name: 'Estojo', productionPrice: 1.50 },
+      ];
+    } catch (e) {
+      return [];
+    }
   });
 
+  // Inicializa a produção com tratamento de erro
   const [production, setProduction] = useState<ProductionEntry[]>(() => {
-    const saved = localStorage.getItem('sewmaster_production');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('sewmaster_production');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
   });
 
-  // Efeito para salvar no LocalStorage sempre que houver mudanças
+  // Salva dados sempre que alterados
   useEffect(() => {
     localStorage.setItem('sewmaster_catalog', JSON.stringify(catalog));
   }, [catalog]);
@@ -36,7 +45,7 @@ const App: React.FC = () => {
 
   const financialSummary = useMemo(() => {
     const totalProductionCost = production.reduce((acc, curr) => acc + curr.total, 0);
-    const totalPieces = production.reduce((acc, curr) => acc + curr.quantity, 0);
+    const totalPieces = production.reduce((acc, curr) => acc + (curr.quantity || 0), 0);
     const seamstressCount = new Set(production.map(p => p.seamstress)).size;
     
     return {
@@ -47,22 +56,26 @@ const App: React.FC = () => {
   }, [production]);
 
   const addCatalog = (product: Omit<ProductCatalog, 'id'>) => {
-    setCatalog(prev => [...prev, { ...product, id: Math.random().toString(36).substr(2, 9) }]);
+    setCatalog(prev => [...prev, { ...product, id: Date.now().toString() }]);
   };
 
-  const deleteCatalog = (id: string) => setCatalog(prev => prev.filter(p => p.id !== id));
+  const deleteCatalog = (id: string) => {
+    if(confirm("Excluir este item do catálogo?")) {
+      setCatalog(prev => prev.filter(p => p.id !== id));
+    }
+  };
 
   const addProduction = (entry: Omit<ProductionEntry, 'id' | 'total'>) => {
     const newEntry: ProductionEntry = {
       ...entry,
-      id: Math.random().toString(36).substr(2, 9),
+      id: Date.now().toString(),
       total: entry.quantity * entry.unitValue
     };
     setProduction(prev => [newEntry, ...prev]);
   };
 
   const deleteProduction = (id: string) => {
-    if(window.confirm("Tem certeza que deseja excluir este registro?")) {
+    if(confirm("Excluir este registro de produção?")) {
       setProduction(prev => prev.filter(e => e.id !== id));
     }
   };

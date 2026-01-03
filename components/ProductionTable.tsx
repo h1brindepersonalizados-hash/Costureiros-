@@ -156,7 +156,7 @@ const ProductionTable: React.FC<ProductionTableProps> = ({
             }}
             className="bg-slate-900 text-white px-5 py-2.5 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg shadow-slate-200 cursor-pointer"
           >
-            {isAdding ? 'Cancelar' : '+ Novo Lote'}
+            {isAdding ? 'Cancelar' : '+ Colaborador'}
           </button>
         </div>
       </div>

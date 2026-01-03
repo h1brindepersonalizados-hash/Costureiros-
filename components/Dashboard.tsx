@@ -1,5 +1,5 @@
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FinancialSummary, ProductionEntry } from '../types';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -13,6 +13,8 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ summary, production, onPrintSeamstress }) => {
+  const [selectedForPrint, setSelectedForPrint] = useState('');
+
   const formatCurrency = (val: number) => 
     new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
 
@@ -22,7 +24,6 @@ const Dashboard: React.FC<DashboardProps> = ({ summary, production, onPrintSeams
     const stats: Record<string, { totalValue: number, totalQuantity: number, pending: number, paid: number, displayName: string }> = {};
     
     production.forEach(p => {
-      // Normaliza para chave única mas guarda o nome original para exibição
       const key = p.seamstress.trim().toLowerCase();
       if (!stats[key]) {
         stats[key] = { 
@@ -42,8 +43,17 @@ const Dashboard: React.FC<DashboardProps> = ({ summary, production, onPrintSeams
     return Object.values(stats).sort((a, b) => b.pending - a.pending);
   }, [production]);
 
+  const handleQuickPrint = () => {
+    if (!selectedForPrint) {
+      alert("Por favor, selecione um colaborador.");
+      return;
+    }
+    onPrintSeamstress(selectedForPrint);
+  };
+
   return (
     <div className="space-y-6 no-print">
+      {/* Cards de Resumo */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
           <p className="text-slate-400 text-xs font-bold uppercase tracking-wider">A Pagar</p>
@@ -70,11 +80,44 @@ const Dashboard: React.FC<DashboardProps> = ({ summary, production, onPrintSeams
         </div>
       </div>
 
+      {/* Seção de Seleção para Impressão Rápida */}
+      <div className="bg-indigo-50 border border-indigo-100 p-6 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg shadow-indigo-200">
+            📄
+          </div>
+          <div>
+            <h4 className="font-black text-indigo-900 leading-tight">Relatório Expresso</h4>
+            <p className="text-indigo-600/70 text-xs font-medium">Gere o PDF de um colaborador rapidamente.</p>
+          </div>
+        </div>
+        
+        <div className="flex w-full md:w-auto gap-2">
+          <select 
+            value={selectedForPrint}
+            onChange={(e) => setSelectedForPrint(e.target.value)}
+            className="flex-1 md:w-64 bg-white border border-indigo-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 outline-none focus:ring-2 focus:ring-indigo-500 transition-all appearance-none cursor-pointer"
+          >
+            <option value="">Selecionar colaborador...</option>
+            {seamstressStats.map((s, idx) => (
+              <option key={idx} value={s.displayName}>{s.displayName}</option>
+            ))}
+          </select>
+          <button 
+            onClick={handleQuickPrint}
+            className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 whitespace-nowrap"
+          >
+            Gerar PDF
+          </button>
+        </div>
+      </div>
+
+      {/* Grid Principal do Dashboard */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
           <div className="p-6 border-b border-slate-50 flex justify-between items-center">
-            <h4 className="text-slate-800 font-bold">Resumo por Colaborador</h4>
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Consolidado</span>
+            <h4 className="text-slate-800 font-bold">Resumo Financeiro Individual</h4>
+            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Lista Consolidada</span>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
@@ -83,7 +126,7 @@ const Dashboard: React.FC<DashboardProps> = ({ summary, production, onPrintSeams
                   <th className="px-6 py-4 font-bold">Colaborador</th>
                   <th className="px-6 py-4 font-bold text-center">Status</th>
                   <th className="px-6 py-4 font-bold text-right">Valor Pendente</th>
-                  <th className="px-6 py-4 font-bold text-right">Ações</th>
+                  <th className="px-6 py-4 font-bold text-right">Ação</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
@@ -99,16 +142,16 @@ const Dashboard: React.FC<DashboardProps> = ({ summary, production, onPrintSeams
                     <td className="px-6 py-4 text-right">
                       <button 
                         onClick={() => onPrintSeamstress(s.displayName)}
-                        className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100 flex items-center gap-2 ml-auto"
+                        className="bg-slate-100 text-slate-600 hover:bg-indigo-600 hover:text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all"
                       >
-                        📄 Exportar PDF
+                        PDF
                       </button>
                     </td>
                   </tr>
                 ))}
                 {seamstressStats.length === 0 && (
                   <tr>
-                    <td colSpan={4} className="py-20 text-center text-slate-400 italic">Registre a produção para ver o resumo.</td>
+                    <td colSpan={4} className="py-20 text-center text-slate-400 italic">Nenhum colaborador registrado.</td>
                   </tr>
                 )}
               </tbody>
@@ -117,7 +160,7 @@ const Dashboard: React.FC<DashboardProps> = ({ summary, production, onPrintSeams
         </div>
 
         <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center">
-          <h4 className="text-slate-800 font-bold mb-4 w-full text-sm uppercase tracking-widest opacity-60">Divisão de Dívida</h4>
+          <h4 className="text-slate-800 font-bold mb-4 w-full text-sm uppercase tracking-widest opacity-60">Dívida por Pessoa</h4>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -142,7 +185,7 @@ const Dashboard: React.FC<DashboardProps> = ({ summary, production, onPrintSeams
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <p className="text-[10px] text-slate-400 text-center mt-2 uppercase font-black tracking-widest">Top Pendências</p>
+          <p className="text-[10px] text-slate-400 text-center mt-2 uppercase font-black tracking-widest">Maiores Pendências</p>
         </div>
       </div>
     </div>

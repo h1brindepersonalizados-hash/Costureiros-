@@ -20,7 +20,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
+            background-color: #ffffff; /* Fundo branco puro para evitar cinzas escuros */
             -webkit-tap-highlight-color: transparent;
             overscroll-behavior-y: contain;
         }
@@ -33,6 +33,63 @@
         .no-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
+        
+        /* Estilos de Impressão (PDF) - Foco em contraste máximo */
+        @media print {
+            @page {
+                margin: 1.5cm;
+                size: portrait;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                background-color: transparent !important; /* Remove cinzas na impressão */
+            }
+            nav, button, .no-print, form, header p, .action-buttons, footer {
+                display: none !important;
+            }
+            body {
+                background-color: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                color: black !important;
+            }
+            main {
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: visible !important;
+                display: block !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .card {
+                border: none !important;
+                box-shadow: none !important;
+            }
+            table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                border: 1px solid #000 !important;
+            }
+            th, td {
+                border: 1px solid #ddd !important;
+                padding: 10px !important;
+                font-size: 11px !important;
+                color: #000 !important;
+                background-color: white !important;
+            }
+            th {
+                text-transform: uppercase;
+                font-size: 9px;
+            }
+            .text-indigo-600 { color: #000 !important; font-weight: bold !important; }
+            .text-rose-600 { color: #000 !important; font-weight: bold !important; }
+            .bg-slate-900 { background-color: #000 !important; color: white !important; }
+        }
+        .print-only {
+            display: none;
         }
     </style>
 <script type="importmap">
@@ -49,7 +106,6 @@
 </head>
 <body class="antialiased text-slate-900">
     <div id="root"></div>
-    <!-- No Netlify/Vite o caminho deve ser absoluto ou relativo ao root -->
     <script type="module" src="/index.tsx"></script>
 </body>
 </html>

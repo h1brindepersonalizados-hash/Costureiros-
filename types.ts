@@ -7,9 +7,9 @@ export interface ProductionEntry {
   quantity: number;
   unitValue: number;
   total: number;
+  status: 'pago' | 'pendente';
 }
 
-// Added SalesEntry interface to fix the module export error in SalesTable.tsx
 export interface SalesEntry {
   id: string;
   date: string;
@@ -29,6 +29,8 @@ export interface FinancialSummary {
   totalProductionCost: number;
   totalPieces: number;
   seamstressCount: number;
+  totalPending: number;
+  totalPaid: number;
 }
 
-export type AppTab = 'dashboard' | 'production' | 'catalog' | 'insights';
+export type AppTab = 'dashboard' | 'production' | 'catalog' | 'ranking';

@@ -12,18 +12,18 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab }) => {
     { id: 'dashboard', label: 'Início', icon: '💳' },
     { id: 'production', label: 'Produção', icon: '🧵' },
     { id: 'catalog', label: 'Catálogo', icon: '🏷️' },
-    { id: 'insights', label: 'IA', icon: '✨' },
+    { id: 'ranking', label: 'Ranking', icon: '🏆' },
   ];
 
   return (
     <>
       {/* Sidebar para Desktop */}
-      <nav className="hidden md:flex w-64 bg-white border-r border-slate-200 flex-col p-6 sticky top-0 h-screen">
+      <nav className="hidden md:flex w-64 bg-white border-r border-slate-200 flex-col p-6 sticky top-0 h-screen no-print">
         <div className="flex items-center gap-2 mb-10 px-2">
-          <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white text-xl shadow-lg shadow-indigo-200">
+          <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white text-xl shadow-lg shadow-indigo-100">
             🧵
           </div>
-          <span className="font-serif font-bold text-2xl text-slate-800">SewMaster</span>
+          <span className="font-serif font-bold text-2xl text-slate-800 tracking-tighter">SewMaster</span>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -44,12 +44,12 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab }) => {
         </div>
         
         <div className="mt-auto p-4 bg-slate-50 rounded-2xl border border-slate-100">
-          <p className="text-xs text-slate-400 text-center font-medium">Versão 1.0 App Standalone</p>
+          <p className="text-[10px] text-slate-400 text-center font-bold uppercase tracking-widest">Gestão de Ateliê v1.2</p>
         </div>
       </nav>
 
       {/* Bottom Nav para Mobile */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-slate-100 px-6 py-3 z-50 flex justify-between items-center safe-area-bottom">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-slate-100 px-6 py-3 z-50 flex justify-between items-center safe-area-bottom no-print">
         {menuItems.map((item) => (
           <button
             key={item.id}
@@ -59,12 +59,9 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab }) => {
             <span className={`text-2xl transition-transform duration-200 ${activeTab === item.id ? 'scale-110' : 'opacity-50'}`}>
               {item.icon}
             </span>
-            <span className={`text-[10px] font-bold uppercase tracking-wider ${activeTab === item.id ? 'text-indigo-600' : 'text-slate-400'}`}>
+            <span className={`text-[9px] font-bold uppercase tracking-wider ${activeTab === item.id ? 'text-indigo-600' : 'text-slate-400'}`}>
               {item.label}
             </span>
-            {activeTab === item.id && (
-              <span className="absolute -top-1 w-1 h-1 bg-indigo-600 rounded-full animate-pulse"></span>
-            )}
           </button>
         ))}
       </nav>

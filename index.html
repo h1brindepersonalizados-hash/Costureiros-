@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Produção">
     <meta name="theme-color" content="#4f46e5">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="./manifest.json">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #ffffff; /* Fundo branco puro para evitar cinzas escuros */
+            background-color: #ffffff;
             -webkit-tap-highlight-color: transparent;
             overscroll-behavior-y: contain;
         }
@@ -35,7 +35,6 @@
             scrollbar-width: none;
         }
         
-        /* Estilos de Impressão (PDF) - Foco em contraste máximo */
         @media print {
             @page {
                 margin: 1.5cm;
@@ -44,7 +43,7 @@
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
-                background-color: transparent !important; /* Remove cinzas na impressão */
+                background-color: transparent !important;
             }
             nav, button, .no-print, form, header p, .action-buttons, footer {
                 display: none !important;
@@ -106,6 +105,6 @@
 </head>
 <body class="antialiased text-slate-900">
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <script type="module" src="./index.tsx"></script>
 </body>
 </html>

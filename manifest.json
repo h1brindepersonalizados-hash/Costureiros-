@@ -3,7 +3,7 @@
   "name": "Controle de Produção",
   "short_name": "Produção",
   "description": "Gestão de produção e pagamentos para ateliês.",
-  "start_url": ".",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#4f46e5",
